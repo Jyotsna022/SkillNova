@@ -338,8 +338,7 @@
 </section>
 
 <footer>
-    © 2026 SkillNova · CS5054NT Advanced Programming · Itahari International College ·
-    <a href="${pageContext.request.contextPath}/health/db">DB Health</a>
+    © 2026 SkillNova · Built for smarter hiring between clients and freelancers.
 </footer>
 </body>
 </html>
