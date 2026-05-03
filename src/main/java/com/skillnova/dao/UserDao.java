@@ -111,12 +111,48 @@ public class UserDao {
         return users;
     }
 
+    public List<User> findAllUsers() throws SQLException {
+        final String sql = """
+                SELECT u.user_id, r.role_name, u.full_name, u.email, u.phone, u.password_hash, u.account_status
+                FROM users u
+                JOIN roles r ON r.role_id = u.role_id
+                ORDER BY u.created_at DESC
+                """;
+
+        List<User> users = new ArrayList<>();
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                User user = new User();
+                user.setUserId(resultSet.getLong("user_id"));
+                user.setRole(Role.valueOf(resultSet.getString("role_name")));
+                user.setFullName(resultSet.getString("full_name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhone(resultSet.getString("phone"));
+                user.setPasswordHash(resultSet.getString("password_hash"));
+                user.setAccountStatus(resultSet.getString("account_status"));
+                users.add(user);
+            }
+        }
+        return users;
+    }
+
     public boolean updateAccountStatus(long userId, String status) throws SQLException {
         final String sql = "UPDATE users SET account_status = ? WHERE user_id = ?";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, status);
             statement.setLong(2, userId);
+            return statement.executeUpdate() == 1;
+        }
+    }
+
+    public boolean deleteById(long userId) throws SQLException {
+        final String sql = "DELETE FROM users WHERE user_id = ?";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
             return statement.executeUpdate() == 1;
         }
     }

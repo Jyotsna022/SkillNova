@@ -283,7 +283,6 @@
 </nav>
 
 <section class="hero">
-    <div class="badge">CS5054NT - Team SkillNova</div>
     <h1>Connect Talent with <span>Real Opportunity</span></h1>
     <p>
         A focused freelance marketplace where clients post jobs and skilled freelancers apply with confidence,

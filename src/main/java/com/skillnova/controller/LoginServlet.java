@@ -3,13 +3,13 @@ package com.skillnova.controller;
 import com.skillnova.model.Role;
 import com.skillnova.model.User;
 import com.skillnova.service.AuthService;
+import com.skillnova.util.CookieUtil;
+import com.skillnova.util.SessionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Cookie;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,6 +22,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String remember = CookieUtil.get(req, CookieUtil.REMEMBER_ME);
+        req.setAttribute("rememberChecked", "1".equals(remember));
         if ("1".equals(req.getParameter("timeout"))) {
             req.setAttribute("error", "Session timed out. Please sign in again.");
         }
@@ -51,20 +53,13 @@ public class LoginServlet extends HttpServlet {
             }
 
             User user = userOptional.get();
-            HttpSession session = req.getSession(true);
-            session.setAttribute("userId", user.getUserId());
-            session.setAttribute("fullName", user.getFullName());
-            session.setAttribute("role", user.getRole().name());
-            session.setAttribute("lastSeenAt", System.currentTimeMillis());
+            SessionUtil.createUserSession(req, user.getUserId(), user.getFullName(), user.getRole().name());
 
-            Cookie rememberCookie = new Cookie("skillnova_remember", "1");
-            rememberCookie.setPath(req.getContextPath().isEmpty() ? "/" : req.getContextPath());
             if ("on".equalsIgnoreCase(rememberMe)) {
-                rememberCookie.setMaxAge(7 * 24 * 60 * 60);
+                CookieUtil.add(req, resp, CookieUtil.REMEMBER_ME, "1", 7 * 24 * 60 * 60);
             } else {
-                rememberCookie.setMaxAge(0);
+                CookieUtil.delete(req, resp, CookieUtil.REMEMBER_ME);
             }
-            resp.addCookie(rememberCookie);
 
             if (user.getRole() == Role.ADMIN) {
                 resp.sendRedirect(req.getContextPath() + "/admin/dashboard");

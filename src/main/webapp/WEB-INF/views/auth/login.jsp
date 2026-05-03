@@ -187,7 +187,7 @@
                 <input id="password" type="password" name="password" required />
             </div>
             <label class="remember" for="rememberMe">
-                <input id="rememberMe" type="checkbox" name="rememberMe" />
+                <input id="rememberMe" type="checkbox" name="rememberMe" ${rememberChecked ? 'checked' : ''} />
                 Keep me signed in on this device
             </label>
             <button type="submit">Sign In</button>

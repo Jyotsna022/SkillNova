@@ -1,5 +1,7 @@
 package com.skillnova.controller;
 
+import com.skillnova.util.CookieUtil;
+import com.skillnova.util.SessionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,9 +17,8 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+        SessionUtil.invalidate(session);
+        CookieUtil.delete(req, resp, CookieUtil.REMEMBER_ME);
         resp.sendRedirect(req.getContextPath() + "/login");
     }
 }
