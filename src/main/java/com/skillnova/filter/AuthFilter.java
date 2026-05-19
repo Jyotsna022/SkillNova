@@ -1,5 +1,7 @@
 package com.skillnova.filter;
 
+import com.skillnova.util.CookieUtil;
+import com.skillnova.util.SessionUtil;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -43,22 +45,31 @@ public class AuthFilter implements Filter {
         }
 
         HttpSession session = req.getSession(false);
-        String role = session == null ? null : (String) session.getAttribute("role");
+        String role = SessionUtil.getRole(session);
 
         if (session != null) {
-            Long lastSeen = (Long) session.getAttribute("lastSeenAt");
+            Long lastSeen = SessionUtil.getLastSeenAt(session);
             long now = System.currentTimeMillis();
             if (lastSeen != null && now - lastSeen > SESSION_TIMEOUT_MILLIS) {
-                session.invalidate();
+                SessionUtil.invalidate(session);
+                CookieUtil.delete(req, resp, CookieUtil.REMEMBER_ME);
                 resp.sendRedirect(contextPath + "/login?timeout=1");
                 return;
             }
-            session.setAttribute("lastSeenAt", now);
+            SessionUtil.touchSession(session);
         }
 
         if (role == null) {
             resp.sendRedirect(contextPath + "/login");
             return;
+        }
+
+        if (role != null && (path.startsWith("/client") || path.startsWith("/freelancer"))) {
+            String status = (String) session.getAttribute("accountStatus");
+            if (status != null && "SUSPENDED".equalsIgnoreCase(status)) {
+                resp.sendRedirect(contextPath + "/error/403");
+                return;
+            }
         }
 
         if (path.startsWith("/admin") && !"ADMIN".equals(role)) {
