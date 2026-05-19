@@ -203,6 +203,21 @@
         .row-actions { display: flex; flex-wrap: wrap; gap: 6px; }
         .compact { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .compact .input { width: auto; min-width: 90px; height: 38px; padding: 0 9px; }
+
+        .mobile-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 44px; height: 44px;
+            border: 1px solid #d8dbe4;
+            border-radius: 12px;
+            background: transparent;
+            color: #242b40;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.5rem;
+        }
+
         @media (max-width: 1180px) {
             .grid { grid-template-columns: 1fr; min-height: auto; }
             .search { min-width: 240px; }
@@ -211,9 +226,24 @@
             .topbar { height: auto; padding: 12px; flex-wrap: wrap; }
             .bar-left, .bar-right { width: 100%; justify-content: space-between; flex-wrap: wrap; }
             .search { min-width: 0; width: 100%; }
-            .shell { width: calc(100% - 20px); margin-top: 12px; }
+            .mobile-toggle { display: flex; }
+            .nav { display: none; }
+            .nav.open {
+                display: flex; flex-direction: column; width: 100%;
+                background: #ecedf3; border-radius: 12px; padding: 4px 0; order: 10;
+            }
+            .nav.open a { padding: 12px 16px; border-bottom: 1px solid #dfe2ea; font-size: 1rem; }
+            .nav.open a:last-child { border-bottom: 0; }
+            .shell { width: calc(100% - 16px); margin-top: 12px; }
             .hero, .card-head, .card-body { padding: 12px; }
             .two-col { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr; }
+            table { display: block; overflow-x: auto; }
+        }
+        @media (max-width: 480px) {
+            .brand { font-size: 1.5rem; }
+            .hero h1 { font-size: 1.5rem; }
+            .shell { width: calc(100% - 12px); }
         }
     </style>
 </head>
@@ -230,6 +260,7 @@
 <header class="topbar">
     <div class="bar-left">
         <div class="brand">SkillNova</div>
+        <button class="mobile-toggle" onclick="document.querySelector('.nav').classList.toggle('open')" aria-label="Toggle menu">&#9776;</button>
         <nav class="nav">
             <a href="${pageContext.request.contextPath}/client/dashboard">Dashboard</a>
             <a class="active" href="${pageContext.request.contextPath}/client/jobs">Jobs</a>

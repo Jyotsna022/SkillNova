@@ -339,6 +339,23 @@
             color: #4f596f;
         }
 
+        .mobile-toggle, .sidebar-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #d8dbe4;
+            border-radius: 12px;
+            background: transparent;
+            color: #242b40;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .mobile-toggle { width: 44px; height: 44px; font-size: 1.5rem; }
+        .sidebar-toggle {
+            width: 100%; height: 48px; gap: 8px;
+            font-size: 1rem; font-weight: 700; grid-column: 1 / -1;
+        }
+
         @media (max-width: 1200px) {
             .filters { grid-template-columns: 1fr 1fr; }
             .job { grid-template-columns: 1fr; }
@@ -346,30 +363,32 @@
         }
 
         @media (max-width: 820px) {
-            .topbar {
-                height: auto;
-                padding: 12px;
-                flex-wrap: wrap;
+            .topbar { height: auto; padding: 12px; flex-wrap: wrap; }
+            .bar-left, .bar-right { width: 100%; justify-content: space-between; flex-wrap: wrap; }
+            .search { min-width: 0; width: 100%; }
+            .mobile-toggle, .sidebar-toggle { display: flex; }
+            .nav { display: none; }
+            .nav.open {
+                display: flex; flex-direction: column; width: 100%;
+                background: #ecedf3; border-radius: 12px; padding: 4px 0; order: 10;
             }
-
-            .bar-left,
-            .bar-right {
-                width: 100%;
-                justify-content: space-between;
-                flex-wrap: wrap;
-            }
-
-            .search {
-                min-width: 0;
-                width: 100%;
-            }
-
-            .shell { width: calc(100% - 20px); margin-top: 12px; grid-template-columns:1fr; }
-
+            .nav.open a { padding: 12px 16px; border-bottom: 1px solid #dfe2ea; font-size: 1rem; }
+            .nav.open a:last-child { border-bottom: 0; }
+            .shell { width: calc(100% - 16px); margin-top: 12px; grid-template-columns: 1fr; }
+            .sidebar { display: none; min-height: auto; }
+            .sidebar.open { display: flex; min-height: auto; }
             .hero { padding: 16px; }
-            .filters,
-            .panel-head,
-            .job { padding: 12px; }
+            .filters { grid-template-columns: 1fr; }
+            .panel-head, .job { padding: 12px; }
+            .footer-top { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .brand { font-size: 1.5rem; }
+            .hero h1 { font-size: 1.3rem; }
+            .hero p { font-size: 0.88rem; }
+            .shell { width: calc(100% - 12px); }
+            .filters { padding: 12px; }
         }
     </style>
 </head>
@@ -382,6 +401,7 @@
 <header class="topbar">
     <div class="bar-left">
         <div class="brand">SkillNova</div>
+        <button class="mobile-toggle" onclick="document.querySelector('.nav').classList.toggle('open')" aria-label="Toggle menu">&#9776;</button>
         <nav class="nav">
             <a class="active" href="${pageContext.request.contextPath}/freelancer/jobs">Find Work</a>
             <a href="${pageContext.request.contextPath}/freelancer/profile">Profile</a>
@@ -399,6 +419,7 @@
 </header>
 
 <div class="shell">
+    <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')"><span class="material-symbols-rounded">menu</span> Menu</button>
     <aside class="sidebar">
         <div class="workspace"><div class="pic">SN</div><div><h3>Workspace</h3><p>Pro Freelancer</p></div></div>
         <nav class="menu">

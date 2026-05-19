@@ -81,7 +81,7 @@
 
         .brand span { color: var(--blue-500); }
 
-        .logout {
+        .top-links .logout {
             text-decoration: none;
             font-size: 0.92rem;
             border: 1px solid transparent;
@@ -290,19 +290,54 @@
         }
 
         @media (max-width: 780px) {
+            .topbar { height: auto; padding: 12px; flex-wrap: wrap; gap: 10px; }
+            .mobile-toggle { display: flex; }
+            .top-links { display: none; }
+            .top-links.open {
+                display: flex; flex-direction: column; width: 100%;
+                background: #f0f1f6; border-radius: 12px; padding: 4px 0; order: 10;
+            }
+            .top-links.open a { padding: 12px 16px; border-bottom: 1px solid #dfe2ea; }
+            .top-links.open a:last-child { border-bottom: 0; }
+            .cards { grid-template-columns: 1fr 1fr; }
+            .hero { flex-direction: column; gap: 10px; }
+            .admin-search { width: 100%; }
             .user-table th:nth-child(3), .user-table td:nth-child(3), .user-table th:nth-child(4), .user-table td:nth-child(4) {
                 display: none;
             }
-
             .job-table th:nth-child(4), .job-table td:nth-child(4), .job-table th:nth-child(5), .job-table td:nth-child(5) {
                 display: none;
             }
+            table { display: block; overflow-x: auto; }
+        }
+
+        .mobile-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 44px; height: 44px;
+            border: 1px solid #d8dbe4;
+            border-radius: 12px;
+            background: transparent;
+            color: #242b40;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .brand { font-size: 1.3rem; }
+            .cards { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.3rem; }
+            .layout { padding: 0 10px; }
+            .footer-top { grid-template-columns: 1fr !important; }
         }
     </style>
 </head>
 <body>
 <header class="topbar">
     <div class="brand"><span>Skill</span>Nova Admin</div>
+    <button class="mobile-toggle" onclick="document.querySelector('.top-links').classList.toggle('open')" aria-label="Toggle menu">&#9776;</button>
     <div class="top-links">
         <a href="${pageContext.request.contextPath}/about.jsp">About</a>
         <a href="${pageContext.request.contextPath}/contact.jsp">Contact</a>

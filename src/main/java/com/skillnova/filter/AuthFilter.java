@@ -24,7 +24,9 @@ public class AuthFilter implements Filter {
             "/login",
             "/register",
             "/health/db",
-            "/logout"
+            "/logout",
+            "/about.jsp",
+            "/contact.jsp"
     );
 
     private static final long SESSION_TIMEOUT_MILLIS = 20L * 60L * 1000L;

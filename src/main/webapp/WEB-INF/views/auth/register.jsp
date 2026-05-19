@@ -176,6 +176,7 @@
     <nav class="nav">
         <a href="${pageContext.request.contextPath}/register?role=FREELANCER">Find Work</a>
         <a href="${pageContext.request.contextPath}/register?role=CLIENT">Hire Talent</a>
+        <a href="${pageContext.request.contextPath}/">Dashboard</a>
         <a href="${pageContext.request.contextPath}/about.jsp">About</a>
         <a href="${pageContext.request.contextPath}/contact.jsp">Contact</a>
     </nav>

@@ -127,6 +127,20 @@
         .footer-bottom { margin-top:12px; display:flex; justify-content:space-between; color:#697286; font-size:13px; gap:10px; flex-wrap:wrap; }
         .locale { display:flex; gap:16px; }
 
+        .mobile-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 40px; height: 40px;
+            border: 1px solid #d8dbe4;
+            border-radius: 10px;
+            background: transparent;
+            color: #242b40;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.4rem;
+        }
+
         @media (max-width:1080px) {
             .hero,.cards,.journey-grid,.why-grid,.footer-top { grid-template-columns:1fr; }
             .section h2,.why h3,.cta-band h3 { font-size:36px; }
@@ -137,9 +151,32 @@
             .topbar { height:auto; padding:12px 0; }
             .topbar .container { flex-wrap:wrap; gap:10px; }
             .left,.right { width:100%; justify-content:space-between; }
-            .links { gap:12px; font-size:13px; flex-wrap:wrap; }
+            .mobile-toggle { display:flex; }
+            .links { display:none; }
+            .links.open {
+                display:flex; flex-direction:column; width:100%;
+                background:#f4f5fa; border-radius:12px; padding:4px 0;
+                gap:0; order:10;
+            }
+            .links.open a {
+                padding:12px 16px; border-bottom:1px solid #e6e8f0;
+                font-size:14px;
+            }
+            .links.open a:last-child { border-bottom:0; }
             .brand { font-size:24px; }
             .hero { padding-top:44px; }
+            .hero-actions { flex-direction:column; }
+            .cta { width:100%; }
+            .benefits { grid-template-columns:1fr; }
+            .opp-role { font-size:26px; }
+            .footer-top { grid-template-columns:1fr; }
+        }
+        @media (max-width:480px) {
+            h1 { font-size:32px; }
+            .section h2,.why h3 { font-size:28px; }
+            .cta-band h3 { font-size:28px; }
+            .hero p { font-size:16px; }
+            .container { width:min(1240px,100% - 20px); }
         }
     </style>
 </head>
@@ -148,6 +185,7 @@
     <div class="container">
         <div class="left">
             <a class="brand" href="${pageContext.request.contextPath}/">SkillNova</a>
+            <button class="mobile-toggle" onclick="document.querySelector('.links').classList.toggle('open')" aria-label="Toggle menu">&#9776;</button>
             <nav class="links">
                  <a href="${pageContext.request.contextPath}/register?role=FREELANCER">Find Work</a>
                  <a href="${pageContext.request.contextPath}/register?role=CLIENT">Hire Talent</a>

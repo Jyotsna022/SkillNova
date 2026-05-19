@@ -19,6 +19,19 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        jakarta.servlet.http.HttpSession session = req.getSession(false);
+        if (session != null && SessionUtil.getRole(session) != null) {
+            String role = SessionUtil.getRole(session);
+            if ("ADMIN".equals(role)) {
+                resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
+            } else if ("CLIENT".equals(role)) {
+                resp.sendRedirect(req.getContextPath() + "/client/dashboard");
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/freelancer/dashboard");
+            }
+            return;
+        }
+
         String role = trim(req.getParameter("role"));
         if ("CLIENT".equalsIgnoreCase(role) || "FREELANCER".equalsIgnoreCase(role)) {
             req.setAttribute("role", role.toUpperCase());

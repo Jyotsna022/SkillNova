@@ -51,11 +51,48 @@
         .col a { display:block; text-decoration:none; color:#5f697d; margin-bottom:8px; font-size:14px; transition:color .2s ease; }
         .col a:hover { color:#0a8575; }
         .footer-bottom { margin-top:12px; display:flex; justify-content:space-between; color:#697286; font-size:13px; gap:10px; flex-wrap:wrap; }
+
+        .mobile-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 40px; height: 40px;
+            border: 1px solid #d8dbe4;
+            border-radius: 10px;
+            background: transparent;
+            color: #242b40;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.4rem;
+        }
+
         @media (max-width:980px) { .intro-grid,.feature-grid,.footer-top { grid-template-columns:1fr; } }
+        @media (max-width:760px) {
+            .topbar { height:auto; padding:12px 0; }
+            .topbar .container { flex-wrap:wrap; gap:10px; }
+            .left,.right { width:100%; justify-content:space-between; }
+            .mobile-toggle { display:flex; }
+            .links { display:none; }
+            .links.open {
+                display:flex; flex-direction:column; width:100%;
+                background:#f4f5fa; border-radius:12px; padding:4px 0;
+                gap:0; order:10;
+            }
+            .links.open a { padding:12px 16px; border-bottom:1px solid #e6e8f0; }
+            .links.open a:last-child { border-bottom:0; }
+            .brand { font-size:24px; }
+            .hero h1 { font-size:32px; }
+            .hero p { font-size:16px; }
+            .footer-top { grid-template-columns:1fr; }
+        }
+        @media (max-width:480px) {
+            .container { width:min(1240px,100% - 20px); }
+            .hero { padding:40px 0 48px; }
+        }
     </style>
 </head>
 <body>
-<header class="topbar"><div class="container"><div class="left"><a class="brand" href="${pageContext.request.contextPath}/">SkillNova</a><nav class="links"><a href="${pageContext.request.contextPath}/register?role=FREELANCER">Find Work</a><a href="${pageContext.request.contextPath}/register?role=CLIENT">Hire Talent</a><a href="${pageContext.request.contextPath}/about.jsp">About</a><a href="${pageContext.request.contextPath}/contact.jsp">Contact</a></nav></div><div class="right auth"><a class="login" href="${pageContext.request.contextPath}/login">Log in</a><a class="signup" href="${pageContext.request.contextPath}/register">Sign up</a></div></div></header>
+<header class="topbar"><div class="container"><div class="left"><a class="brand" href="${pageContext.request.contextPath}/">SkillNova</a><button class="mobile-toggle" onclick="document.querySelector('.links').classList.toggle('open')" aria-label="Toggle menu">&#9776;</button><nav class="links"><a href="${pageContext.request.contextPath}/register?role=FREELANCER">Find Work</a><a href="${pageContext.request.contextPath}/register?role=CLIENT">Hire Talent</a><a href="${pageContext.request.contextPath}/about.jsp">About</a><a href="${pageContext.request.contextPath}/contact.jsp">Contact</a></nav></div><div class="right auth"><a class="login" href="${pageContext.request.contextPath}/login">Log in</a><a class="signup" href="${pageContext.request.contextPath}/register">Sign up</a></div></div></header>
 <section class="hero"><div class="container"><h1>About SkillNova Institution Initiative</h1><p>SkillNova is a practice-driven digital platform created to connect institutional learning with real client outcomes, professional freelancing discipline, and sustainable innovation culture.</p></div></section>
 <section class="section"><div class="container"><div class="intro-grid"><article class="copy-card"><h3>Institution First. Industry Ready.</h3><p>SkillNova operates as a strategic initiative of our institution to transform student potential into professional impact. We focus on verified profiles, transparent collaboration, and real-world project execution.</p><p>By combining academic supervision with marketplace mechanics, the platform enables structured growth from foundational learning to advanced industry contribution.</p></article><article class="image-card"><img src="https://images.pexels.com/photos/256395/pexels-photo-256395.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Modern institutional campus architecture" onerror="this.onerror=null;this.src='https://picsum.photos/1200/700?blur=1';"></article></div><div class="feature-grid"><article class="feature"><span class="material-symbols-rounded">school</span><h4>Academic Integration</h4><p>Curriculum-aligned workflows that transform classroom projects into client-deliverable outcomes and measurable competencies.</p></article><article class="feature"><span class="material-symbols-rounded">verified_user</span><h4>Quality Governance</h4><p>Role moderation, account verification, and milestone supervision to maintain credibility and institutional standards.</p></article><article class="feature"><span class="material-symbols-rounded">groups</span><h4>Talent Development</h4><p>Students and graduates build communication, project ownership, and portfolio confidence through live engagements.</p></article><article class="feature"><span class="material-symbols-rounded">domain</span><h4>Industry Collaboration</h4><p>Clients access focused talent pools with clear accountability, structured proposals, and streamlined hiring visibility.</p></article><article class="feature"><span class="material-symbols-rounded">workspace_premium</span><h4>Career Pathways</h4><p>Supports long-term employability by emphasizing ethical professionalism, delivery discipline, and niche specialization.</p></article><article class="feature"><span class="material-symbols-rounded">trending_up</span><h4>Institutional Impact</h4><p>Strengthens innovation culture, creates economic opportunities, and builds a sustainable regional digital talent ecosystem.</p></article></div></div></section>
 <footer class="footer"><div class="container"><div class="footer-top"><div><div class="foot-brand">SkillNova</div><div class="foot-text">The premium marketplace for world-class freelance talent and elite global clients.</div><div class="social"><a href="#">x</a><a href="#">in</a><a href="#">o</a></div></div><div class="col"><h4>Platform</h4><a href="${pageContext.request.contextPath}/about.jsp">About Us</a><a href="#">Safety</a><a href="#">Help Center</a><a href="${pageContext.request.contextPath}/contact.jsp">Contact</a></div><div class="col"><h4>Legal</h4><a href="#">Terms of Service</a><a href="#">Privacy Policy</a></div></div><div class="footer-bottom"><div>&copy; 2024 SkillNova. All rights reserved.</div><div><span>English (US)</span> · <span>NPR</span></div></div></div></footer>
