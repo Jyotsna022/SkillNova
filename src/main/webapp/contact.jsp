@@ -50,7 +50,43 @@
         .col a { display:block; text-decoration:none; color:#5f697d; margin-bottom:8px; font-size:14px; transition:color .2s ease; }
         .col a:hover { color:#0a8575; }
         .footer-bottom { margin-top:12px; display:flex; justify-content:space-between; color:#697286; font-size:13px; gap:10px; flex-wrap:wrap; }
+
+        .mobile-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 40px; height: 40px;
+            border: 1px solid #d8dbe4;
+            border-radius: 10px;
+            background: transparent;
+            color: #242b40;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.4rem;
+        }
+
         @media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+        @media (max-width:760px) {
+            .topbar { height:auto; padding:12px 0; }
+            .topbar .container { flex-wrap:wrap; gap:10px; }
+            .left,.right { width:100%; justify-content:space-between; }
+            .mobile-toggle { display:flex; }
+            .links { display:none; }
+            .links.open {
+                display:flex; flex-direction:column; width:100%;
+                background:#f4f5fa; border-radius:12px; padding:4px 0;
+                gap:0; order:10;
+            }
+            .links.open a { padding:12px 16px; border-bottom:1px solid #e6e8f0; }
+            .links.open a:last-child { border-bottom:0; }
+            .brand { font-size:24px; }
+            .hero h1 { font-size:32px; }
+            .footer-top { grid-template-columns:1fr; }
+        }
+        @media (max-width:480px) {
+            .container { width:min(1240px,100% - 20px); }
+            .hero { padding:40px 0 48px; }
+        }
     </style>
 </head>
 <body>
@@ -58,6 +94,7 @@
     <div class="container">
         <div class="left">
             <a class="brand" href="${pageContext.request.contextPath}/">SkillNova</a>
+            <button class="mobile-toggle" onclick="document.querySelector('.links').classList.toggle('open')" aria-label="Toggle menu">&#9776;</button>
             <nav class="links">
                 <a href="${pageContext.request.contextPath}/register?role=FREELANCER">Find Work</a>
                 <a href="${pageContext.request.contextPath}/register?role=CLIENT">Hire Talent</a>

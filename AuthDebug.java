@@ -1,5 +1,3 @@
-import com.skillnova.util.DBConnection;
-import com.skillnova.util.PasswordUtil;
 import java.sql.*;
 
 public class AuthDebug {

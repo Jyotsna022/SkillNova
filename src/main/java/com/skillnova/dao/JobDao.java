@@ -1,7 +1,6 @@
 package com.skillnova.dao;
 
 import com.skillnova.model.Job;
-import com.skillnova.util.DBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
